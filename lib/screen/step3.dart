@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../components/chooice.dart';
 
 class Step3 extends StatefulWidget{
   Step3({Key key, this.title}):super(key:key);
@@ -15,8 +14,15 @@ class Step3State extends State<Step3> {
     return Scaffold(
       backgroundColor: const Color(0xFFECF0F1),
       appBar: new AppBar(
-        title: new Text("ADD NEW " + widget.title),
+        title: new Column(
+          children: <Widget>[
+            new Text("ADD NEW"),
+            new Text(widget.title)
+          ],
+        ),
         centerTitle: true,
+        leading: new Icon(Icons.notifications, size: 40.0),
+        automaticallyImplyLeading: false,
       ),
       body: new SingleChildScrollView(
         child: new Padding(

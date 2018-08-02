@@ -37,7 +37,9 @@ class AddNewDealState extends State<AddNewDeal> {
                     ),
                     new ButtonList(
                       label: 'Flip/Rehab',
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(context, new MaterialPageRoute(builder: (_) => new Step1(title: 'Flip/Rehab')));
+                      },
                     ),
                     new ButtonList(
                       label: 'Rental',

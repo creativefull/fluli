@@ -85,7 +85,13 @@ class MainAppState extends State<MainApp> {
                   child: new Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      new Text("My Deals"),
+                      new Text("My Deals", style: new TextStyle(
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold
+                      )),
+                      new SizedBox(
+                        height: 10.0,
+                      ),
                       new SizedBox(
                         width: double.infinity,
                         child: new Container(
