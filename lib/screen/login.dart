@@ -1,6 +1,7 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
+
+import '../pagedefault.dart';
 
 class LoginApp extends StatefulWidget{
   LoginAppState createState()=>  LoginAppState();
@@ -10,9 +11,7 @@ class LoginApp extends StatefulWidget{
 class LoginAppState extends State<LoginApp> {
   @override
   Widget build(BuildContext context){
-    return MaterialApp(
-      title: "Login Application",
-      home: new Scaffold(
+    return new Scaffold(
         body: Padding(
           padding: const EdgeInsets.only(left : 20.0, right: 20.0),
           child: Column(
@@ -45,7 +44,6 @@ class LoginAppState extends State<LoginApp> {
             ],
           ),
         )
-      ),
     );
   }
 }
@@ -63,7 +61,8 @@ class FormLogin extends StatelessWidget {
     });
 
     timer = new Timer(Duration(seconds: 1), () {
-      Navigator.pop(context);
+      Navigator.pushNamedAndRemoveUntil(context, "/", (Route<dynamic> route) => false);
+      // Navigator.pop(context);
     });
   }
 
@@ -118,7 +117,12 @@ class FormLogin extends StatelessWidget {
           height: 20.0,
         ),
         new Center(
-          child: new Text("Create New Account")
+          child: FlatButton(
+            onPressed: () {
+              Navigator.pushNamed(context, "/register");
+            },
+            child: new Text("Create New Account")
+          )
         ),
       ],
     );
