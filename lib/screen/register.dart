@@ -3,7 +3,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:validate/validate.dart';
 import './login.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Register extends StatefulWidget{
   RegisterState createState()=>  RegisterState();
@@ -102,17 +102,17 @@ class _FormRegisterState extends State<FormRegister> {
         _auth.updateProfile(updateInfo);
         await results.reload();
 
-        Firestore.instance.collection('users').document().setData(<String, dynamic>{
-          'uid' : results.uid,
-          'name' : name,
-          'email' : email,
-          'password' : password,
-          'isVerified' : results.isEmailVerified
-        }).then((response) {
-          print("Response e kyok ngene $response");
-        }).catchError((error) {
-          print(error);
-        });
+        // Firestore.instance.collection('users').document().setData(<String, dynamic>{
+        //   'uid' : results.uid,
+        //   'name' : name,
+        //   'email' : email,
+        //   'password' : password,
+        //   'isVerified' : results.isEmailVerified
+        // }).then((response) {
+        //   print("Response e kyok ngene $response");
+        // }).catchError((error) {
+        //   print(error);
+        // });
 
         Navigator.pushNamedAndRemoveUntil(context, "/register/success", (Route<dynamic> route) => false);
       }).catchError((error) {

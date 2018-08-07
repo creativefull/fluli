@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import './pagedefault.dart';
@@ -11,11 +13,18 @@ class SplashScreen extends StatefulWidget{
 
 
 class SplashScreenState extends State<SplashScreen> {
-  bool checkUserLoggedIn() {
+  Future<bool> checkUserLoggedIn() async {
     FirebaseAuth _auth = FirebaseAuth.instance;
     if (_auth.currentUser() != null) {
-      return true;
+      var user = await _auth.currentUser();
+      await user.reload();
+      if (user.isEmailVerified) {
+        return true;
+      } else {
+        return false;
+      }
     } else {
+      Navigator.pop(context);
       return false;
     }
   }
@@ -24,7 +33,7 @@ class SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context){
     return MaterialApp(
       title: "Legendary Investor",
-      initialRoute: checkUserLoggedIn() ? "/" : "/login",
+      initialRoute: checkUserLoggedIn() != null ? "/" : "/login",
       routes: {
         "/" : (BuildContext context) => new PageDefault(),
         "/login" : (BuildContext context) => new LoginApp(),
