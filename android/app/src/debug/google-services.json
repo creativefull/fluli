@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "492010977394",
+    "firebase_url": "https://legendary-investor.firebaseio.com",
+    "project_id": "legendary-investor",
+    "storage_bucket": "legendary-investor.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:492010977394:android:0ea46e8a32c1c630",
+        "android_client_info": {
+          "package_name": "com.legendaryinvestor.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "492010977394-9undc9tpb5d3rc0siga82s458anuprs7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDB2g3Q-VtQ0YDBlnJzYEzab463zfoIRn0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,4 +1,4 @@
-package com.example.legendaryinvestor;
+package com.legendaryinvestor.app;
 
 import android.os.Bundle;
 
