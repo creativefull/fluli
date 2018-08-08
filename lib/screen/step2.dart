@@ -1,16 +1,60 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import '../components/chooice.dart';
 import './step3.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Step2 extends StatefulWidget{
-  Step2({Key key, this.title}):super(key:key);
+  Step2({Key key, this.title, @required this.cacheStep}):super(key:key);
   final String title;
+  final String cacheStep;
   
   Step2State createState()=>  Step2State();
 }
 
 
 class Step2State extends State<Step2> {
+  DatabaseReference tmpDeals;
+  String sellerName = '';
+  final _formKey = new GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    tmpDeals = FirebaseDatabase.instance.reference().child('tmpDeals');
+    FirebaseDatabase.instance.setPersistenceEnabled(true);
+    FirebaseDatabase.instance.setPersistenceCacheSizeBytes(10000000);
+    tmpDeals.keepSynced(true);
+  }
+
+  @override
+  dispose() {
+    super.dispose();
+  }
+
+  void saveTmpDeals(BuildContext context) async {
+    _formKey.currentState.save();
+    if(_formKey.currentState.validate()) {
+      final _user = await FirebaseAuth.instance.currentUser();
+
+      tmpDeals.child(_user.uid).child("tmp" + widget.cacheStep.replaceAll(".", "")).update({
+        'strategy' : widget.title,
+        'sellerName' : sellerName,
+        'uid' : _user.uid
+      }).then((results) {
+        Navigator.push(context, new MaterialPageRoute(
+          builder: (_) => new Step3(title: widget.title, cacheStep: widget.cacheStep)
+        ));
+      }).catchError((error) {
+        print(error);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context){
     return Scaffold(
@@ -19,6 +63,7 @@ class Step2State extends State<Step2> {
         title: new Text("ADD NEW " + widget.title),
         centerTitle: true,
       ),
+      resizeToAvoidBottomPadding: false,
       body: new SingleChildScrollView(
         child: new Padding(
           padding: new EdgeInsets.all(20.0),
@@ -39,14 +84,31 @@ class Step2State extends State<Step2> {
                     color: Colors.black54
                   )),
                   new SizedBox(height: 20.0),
-                  new TextField(
-                    decoration: new InputDecoration(
-                      border: OutlineInputBorder(
-                        borderSide: new BorderSide(color: Colors.black, width: 1.0),
-                        borderRadius: new BorderRadius.circular(20.0)
+                  new Form(
+                    key: _formKey,
+                    child: new TextFormField(
+                      decoration: new InputDecoration(
+                        border: OutlineInputBorder(
+                          borderSide: new BorderSide(color: Colors.black, width: 1.0),
+                          borderRadius: new BorderRadius.circular(20.0)
+                        ),
+                        fillColor: Colors.white,
+                        filled: true,
+                        errorStyle: TextStyle(
+                          color: Colors.red
+                        ),
                       ),
-                      fillColor: Colors.white,
-                      filled: true
+                      onSaved: (String value) {
+                        setState(() {
+                          sellerName = value;
+                        });
+                      },
+                      validator: (String value) {
+                        if (value.isEmpty) {
+                          return "Seller name can't be empty";
+                        }
+                        return null;
+                      },
                     ),
                   ),
                   new SizedBox(
@@ -74,9 +136,7 @@ class Step2State extends State<Step2> {
                           ],
                         ),
                         onPressed: () {
-                          Navigator.push(context, new MaterialPageRoute(
-                            builder: (_) => new Step3(title: widget.title)
-                          ));
+                          saveTmpDeals(context);
                         },
                       ),
                     ],

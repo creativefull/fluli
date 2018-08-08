@@ -1,6 +1,11 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:validate/validate.dart';
 import '../components/chooice.dart';
 import './step2.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Step1 extends StatefulWidget{
   Step1({Key key, this.title}):super(key:key);
@@ -11,6 +16,47 @@ class Step1 extends StatefulWidget{
 
 
 class Step1State extends State<Step1> {
+  DatabaseReference tmpDeals;
+  String emailAddress = '';
+  final _formKey = new GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    tmpDeals = FirebaseDatabase.instance.reference().child('tmpDeals');
+    FirebaseDatabase.instance.setPersistenceEnabled(true);
+    FirebaseDatabase.instance.setPersistenceCacheSizeBytes(10000000);
+    tmpDeals.keepSynced(true);
+  }
+
+  @override
+  dispose() {
+    super.dispose();
+  }
+
+  void saveTmpDeals(BuildContext context) async {
+    _formKey.currentState.save();
+    if(_formKey.currentState.validate()) {
+      final _user = await FirebaseAuth.instance.currentUser();
+      final key = Random.secure();
+      final String cacheStep = key.nextDouble().toString();
+
+      tmpDeals.child(_user.uid).child("tmp" + cacheStep.toString().replaceAll(".", "")).set({
+        'strategy' : widget.title,
+        'email' : emailAddress,
+        'uid' : _user.uid
+      }).then((results) {
+        Navigator.push(context, new MaterialPageRoute(
+          builder: (_) => new Step2(title: widget.title, cacheStep: cacheStep)
+        ));
+      }).catchError((error) {
+        print(error);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context){
     return Scaffold(
@@ -39,14 +85,33 @@ class Step1State extends State<Step1> {
                     color: Colors.black54
                   )),
                   new SizedBox(height: 20.0),
-                  new TextField(
-                    decoration: new InputDecoration(
-                      border: OutlineInputBorder(
-                        borderSide: new BorderSide(color: Colors.black, width: 1.0),
-                        borderRadius: new BorderRadius.circular(20.0)
+                  new Form(
+                    key: _formKey,
+                    child: new TextFormField(
+                      decoration: new InputDecoration(
+                        border: OutlineInputBorder(
+                          borderSide: new BorderSide(color: Colors.black, width: 1.0),
+                          borderRadius: new BorderRadius.circular(20.0)
+                        ),
+                        errorStyle: TextStyle(
+                          color: Colors.red
+                        ),
+                        fillColor: Colors.white,
+                        filled: true
                       ),
-                      fillColor: Colors.white,
-                      filled: true
+                      keyboardType: TextInputType.emailAddress,
+                      onSaved: (String value) {
+                        setState(() {
+                          emailAddress = value;
+                        });
+                      },
+                      validator: (String value) {
+                        try {
+                          Validate.isEmail(value);
+                        } catch (e) {
+                          return "Email address is not valid";
+                        }
+                      },
                     ),
                   ),
                   new SizedBox(
@@ -74,9 +139,7 @@ class Step1State extends State<Step1> {
                           ],
                         ),
                         onPressed: () {
-                          Navigator.push(context, new MaterialPageRoute(
-                            builder: (_) => new Step2(title : widget.title)
-                          ));
+                          saveTmpDeals(context);
                         },
                       ),
                     ],
