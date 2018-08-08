@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import './screen/uncompleted.dart';
 import './home.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import './screen/login.dart';
 
 class PageDefault extends StatefulWidget{
   PageDefaultState createState()=>  PageDefaultState();
@@ -8,10 +11,11 @@ class PageDefault extends StatefulWidget{
 
 class PageDefaultState extends State<PageDefault> {
   int i = 0;
+  bool loggedIn = true;
   
   var pages = [
     new MainApp(),
-    new Container(),
+    new UnCompleteList(),
     new Container(),
     new Container(),
     new Container()
@@ -21,6 +25,14 @@ class PageDefaultState extends State<PageDefault> {
   void initState() {
     // TODO: implement initState
     super.initState();
+
+    FirebaseAuth.instance.onAuthStateChanged.listen((firebaseUser) {
+      if (firebaseUser == null) {
+        setState(() {
+          loggedIn = false;
+        });
+      }
+    });
   }
 
   @override
@@ -32,7 +44,7 @@ class PageDefaultState extends State<PageDefault> {
   @override
   Widget build(BuildContext context){
     return MaterialApp(
-      home: Scaffold(
+      home: !loggedIn ? new LoginApp() : Scaffold(
         body: pages[i],
         bottomNavigationBar: new BottomNavigationBar(
           items: [
@@ -42,7 +54,7 @@ class PageDefaultState extends State<PageDefault> {
             ),
             new BottomNavigationBarItem(
               icon : new Icon(Icons.check),
-              title: new Text('Home')
+              title: new Text('Uncompleted Deals')
             ),
             new BottomNavigationBarItem(
               icon : new Icon(Icons.local_hospital),
@@ -50,7 +62,7 @@ class PageDefaultState extends State<PageDefault> {
             ),
             new BottomNavigationBarItem(
               icon : new Icon(Icons.check_circle),
-              title: new Text('Home')
+              title: new Text('Completed Deals')
             ),
             new BottomNavigationBarItem(
               icon : new Icon(Icons.person),

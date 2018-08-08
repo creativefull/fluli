@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import './addNewDeal.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import './screen/login.dart';
 
 class CustomButton extends StatelessWidget {
   CustomButton({Key key, this.title, this.onTap});
@@ -68,13 +70,60 @@ class MainAppState extends State<MainApp> {
         primaryColor: Colors.white,
         accentColor: Colors.blue
       ),
+      initialRoute: '/',
       routes: <String, WidgetBuilder>{
-        '/addNewDeal' : (BuildContext context) => new AddNewDeal()
+        '/' : (BuildContext context) => new HomeApp(),
+        '/addNewDeal' : (BuildContext context) => new AddNewDeal(),
+        '/login' : (BuildContext context) => new LoginApp(),
       },
-      home: new Scaffold(
+    );
+  }
+}
+
+class HomeApp extends StatefulWidget {
+  HomeAppState createState() => new HomeAppState();
+}
+
+class HomeAppState extends State<HomeApp> {
+
+  @override
+  Widget build(BuildContext context) {
+    return new Scaffold(
         appBar: new AppBar(
           title: new Text("OVERVIEW", style: new TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
           centerTitle: true,
+          actions: <Widget>[
+            GestureDetector(
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext contexts) {
+                    return AlertDialog(
+                      title: Text('Are you sure want to logout ?'),
+                      actions: <Widget>[
+                        new FlatButton(
+                          child: Text("Cancel"),
+                          onPressed: () {
+                            Navigator.pop(contexts);
+                          }
+                        ),
+                        new FlatButton(
+                          child: Text("Yes, Logout"),
+                          onPressed: () async {
+                            await FirebaseAuth.instance.signOut();
+                            FirebaseUser _user = await FirebaseAuth.instance.currentUser();
+                            Navigator.pop(contexts);
+                            Navigator.pushNamedAndRemoveUntil(context, "/login", (Route<dynamic> route) => false);
+                          },
+                        )
+                      ],
+                    );
+                  }
+                );
+              },
+              child: Icon(Icons.last_page, color: Colors.blue),
+            )
+          ],
         ),
         body: new SingleChildScrollView(
           child: new Column(
@@ -110,7 +159,6 @@ class MainAppState extends State<MainApp> {
             ],
           ),
         ),
-      ),
     );
   }
 }
