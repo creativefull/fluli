@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "492010977394",
-    "firebase_url": "https://legendary-investor.firebaseio.com",
-    "project_id": "legendary-investor",
-    "storage_bucket": "legendary-investor.appspot.com"
+    "project_number": "170477823534",
+    "firebase_url": "https://legendaryagent-55a12.firebaseio.com",
+    "project_id": "legendaryagent-55a12",
+    "storage_bucket": "legendaryagent-55a12.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:492010977394:android:0ea46e8a32c1c630",
+        "mobilesdk_app_id": "1:170477823534:android:0ea46e8a32c1c630",
         "android_client_info": {
           "package_name": "com.legendaryinvestor.app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "492010977394-9undc9tpb5d3rc0siga82s458anuprs7.apps.googleusercontent.com",
+          "client_id": "170477823534-5senjutbtcf15u85mob7qdb5r7n1p81d.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDB2g3Q-VtQ0YDBlnJzYEzab463zfoIRn0"
+          "current_key": "AIzaSyAfNPbI6rtdhbMNXtMw0f1tHRH3qc81km0"
         }
       ],
       "services": {
