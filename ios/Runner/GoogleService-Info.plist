@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
+	<string>ca-app-pub-3940256099942544/2934735716</string>
+	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
+	<string>ca-app-pub-3940256099942544/4411468910</string>
+	<key>CLIENT_ID</key>
+	<string>170477823534-kjpuet3oaebc6q772cmvh9u08avv188i.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.170477823534-kjpuet3oaebc6q772cmvh9u08avv188i</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDLxcGca83raxKYqHEpt_w2Z7DLfEEQO6c</string>
+	<key>GCM_SENDER_ID</key>
+	<string>170477823534</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.legendaryinvestor.app</string>
+	<key>PROJECT_ID</key>
+	<string>legendaryagent-55a12</string>
+	<key>STORAGE_BUCKET</key>
+	<string>legendaryagent-55a12.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<true></true>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<false></false>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:170477823534:ios:0ea46e8a32c1c630</string>
+	<key>DATABASE_URL</key>
+	<string>https://legendaryagent-55a12.firebaseio.com</string>
+</dict>
+</plist>
