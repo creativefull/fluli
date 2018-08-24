@@ -14,7 +14,7 @@ class SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
-      // TODO: implement initState
+    // TODO: implement initState
     super.initState();
 
     FirebaseAuth.instance.onAuthStateChanged.listen((firebaseUser) {
