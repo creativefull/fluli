@@ -29,7 +29,9 @@ class SuccessRegisterState extends State<SuccessRegister> {
                 label: Text("Login Now"),
                 color: Colors.blue,
                 textColor: Colors.white,
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamedAndRemoveUntil(context, '/', (Route<dynamic> routes) => false);
+                },
               )
             )
           ],

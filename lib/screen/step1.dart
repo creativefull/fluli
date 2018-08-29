@@ -45,7 +45,7 @@ class Step1State extends State<Step1> {
 
       tmpDeals.child(_user.uid).child("tmp" + cacheStep.toString().replaceAll(".", "")).set({
         'strategy' : widget.title,
-        'email' : emailAddress,
+        'address' : emailAddress,
         'uid' : _user.uid
       }).then((results) {
         Navigator.push(context, new MaterialPageRoute(
@@ -99,18 +99,16 @@ class Step1State extends State<Step1> {
                         fillColor: Colors.white,
                         filled: true
                       ),
-                      keyboardType: TextInputType.emailAddress,
                       onSaved: (String value) {
                         setState(() {
                           emailAddress = value;
                         });
                       },
                       validator: (String value) {
-                        try {
-                          Validate.isEmail(value);
-                        } catch (e) {
+                        if (value.isEmpty) {
                           return "Email address is not valid";
                         }
+                        return null;
                       },
                     ),
                   ),

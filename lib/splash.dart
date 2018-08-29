@@ -38,11 +38,11 @@ class SplashScreenState extends State<SplashScreen> {
     return MaterialApp(
       title: "Legendary Investor",
       routes: {
+        "/" : (BuildContext context) => !loggedIn ? new LoginApp() : new PageDefault(),
         "/login" : (BuildContext context) => new LoginApp(),
         "/register" : (BuildContext context) => new Register(),
         "/register/success" : (BuildContext context) => new SuccessRegister()
-      },
-      home: loggedIn == true ? new PageDefault() : new LoginApp()
+      }
     );
   }
 }

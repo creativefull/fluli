@@ -71,8 +71,8 @@ class FormLoginState extends State<FormLogin> {
       timer = new Timer(Duration(seconds: 1), () {
         FirebaseAuth _auth = FirebaseAuth.instance;
         _auth.signInWithEmailAndPassword(email: email, password: password).then((results) {
-          results.reload();
           Navigator.pushNamedAndRemoveUntil(context, "/", (Route<dynamic> route) => false);
+          results.reload();
         }).catchError((error) {
           Navigator.pop(context);
           showDialog(
