@@ -9,7 +9,8 @@ before_script:
   - brew install ios-deploy
   - git clone https://github.com/flutter/flutter.git -b alpha --depth 1
 script:
-  - ./flutter/bin/flutter -v build ios --no-codesign
+  - ./flutter/bin/flutter doctor -v
+  - ./flutter/bin/flutter build ios --no-codesign
 cache:
   directories:
     - $HOME/.pub-cache
