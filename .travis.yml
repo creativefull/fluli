@@ -14,7 +14,7 @@ before_script:
 script:
   - ./flutter/bin/flutter build ios --release --no-codesign
   - cd ios
-  - bundle exec fastlane custom_lane
+  - fastlane custom_lane
 cache:
   directories:
     - $HOME/.pub-cache
