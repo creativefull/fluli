@@ -64,7 +64,7 @@ class Step1State extends State<Step1> {
       //   print(error);
       // });
 
-      http.Response response = await http.post(apiURL + '/tmpDeals/new', body: dataToSend);
+      // http.Response response = await http.post(apiURL + '/tmpDeals/new', body: dataToSend);
     }
   }
 
