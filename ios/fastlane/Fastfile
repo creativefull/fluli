@@ -19,6 +19,9 @@ platform :ios do
   desc "Description of what the lane does"
   lane :custom_lane do
     xcversion(version: "9.4.1")
+    enable_automatic_code_signing(
+      path: "Runner.xcodeproj"
+    )
     # add actions here: https://docs.fastlane.tools/actions
     build_app(scheme: "Runner",
       workspace: "Runner.xcworkspace",
