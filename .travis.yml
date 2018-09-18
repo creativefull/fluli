@@ -7,7 +7,7 @@ before_script:
   # - brew install --HEAD libimobiledevice
   - brew install ideviceinstaller
   - brew install ios-deploy
-  - brew cask install fastlane -NV
+  - brew cask install fastlane
   - git clone https://github.com/flutter/flutter.git
   - ./flutter/bin/flutter doctor
   - ./flutter/bin/flutter packages get
