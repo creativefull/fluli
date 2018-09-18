@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -31,6 +32,19 @@ class UnCompleteListState extends State<UnCompleteList> {
       });
     });
   }
+  
+  Future<List<TmpModel>> getData() async {
+    List<TmpModel> results = [];
+
+    DataSnapshot data = await tmpDeals.child(_user.uid).once();
+    data.value.forEach((x) {
+      if (x != null) {
+        results.add(TmpModel(address: x['address']));
+      }
+    });
+    
+    return results;
+  }
 
   @override
   Widget build(BuildContext context){
@@ -41,18 +55,21 @@ class UnCompleteListState extends State<UnCompleteList> {
       ),
       body: Container(
         padding: EdgeInsets.all(10.0),
-        child: _user == null ? CircularProgressIndicator() : StreamBuilder(
-          stream: tmpDeals.child(_user.uid).onValue,
+        child: _user == null ? CircularProgressIndicator() : FutureBuilder<List<TmpModel>>(
+          future: getData(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.hasError) {
               print(snapshot.error);
               return Text("Failed to load data from server");
             } else if (snapshot.hasData) {
-              DataSnapshot data = snapshot.data.snapshot;
-              print("DATA YANG DARI SINI ${data.value}");
-              TmpModel tmpData = new TmpModel.fromSnapshot(data);
-              print(tmpData.address);
-              return Text(tmpData.address);
+              // TmpModel tmpData = new TmpModel.fromSnapshot(data);
+              List<Widget> dataList = [];
+              snapshot.data.forEach((value) {
+                dataList.add(Text(value.address));
+              });
+              return Column(
+                children: dataList,
+              );
             } else {
               return Center(
                 child: CircularProgressIndicator(),

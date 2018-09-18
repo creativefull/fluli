@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_database/firebase_database.dart';
 
 class TmpModel {
@@ -6,6 +8,8 @@ class TmpModel {
   final String strategy;
   final String key;
 
+  DatabaseReference tmpDeals = FirebaseDatabase.instance.reference().child('/tmpDeals');
+
   TmpModel({
     this.key,
     this.address,
@@ -13,15 +17,10 @@ class TmpModel {
     this.strategy
   });
 
-  factory TmpModel.fromSnapshot(DataSnapshot snapshot) {
-    Map x = snapshot.value;
-    print("KEYNYA ADALAH ${snapshot.key}");
-
-    String _key = snapshot.key;
-    String _address = snapshot.value['address'];
+  factory TmpModel.fromSnapshot(String key, Map snapshot) {
     return new TmpModel(
-      key: _key,
-      address: _address
+      key: key,
+      address: snapshot['address']
     );
   }
 }

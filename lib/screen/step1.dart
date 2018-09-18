@@ -6,6 +6,8 @@ import '../components/chooice.dart';
 import './step2.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../services/api.dart' show apiURL;
+import 'package:http/http.dart' as http;
 
 class Step1 extends StatefulWidget{
   Step1({Key key, this.title}):super(key:key);
@@ -40,20 +42,29 @@ class Step1State extends State<Step1> {
     _formKey.currentState.save();
     if(_formKey.currentState.validate()) {
       final _user = await FirebaseAuth.instance.currentUser();
-      final key = Random.secure();
-      final String cacheStep = key.nextDouble().toString();
-
-      tmpDeals.child(_user.uid).child("tmp" + cacheStep.toString().replaceAll(".", "")).set({
+      Map<String, dynamic> dataToSend = {
         'strategy' : widget.title,
         'address' : emailAddress,
         'uid' : _user.uid
-      }).then((results) {
-        Navigator.push(context, new MaterialPageRoute(
-          builder: (_) => new Step2(title: widget.title, cacheStep: cacheStep)
-        ));
-      }).catchError((error) {
-        print(error);
-      });
+      };
+
+      // final key = Random.secure();
+      // final String cacheStep = key.nextDouble().toString();
+      // DatabaseReference datanya = tmpDeals.child(_user.uid).push();
+     
+      // datanya.set(<String, String>{
+      //   'strategy' : widget.title,
+      //   'address' : emailAddress,
+      //   'uid' : _user.uid
+      // }).then((results) {
+      //   Navigator.push(context, new MaterialPageRoute(
+      //     builder: (_) => new Step2(title: widget.title, cacheStep: cacheStep)
+      //   ));
+      // }).catchError((error) {
+      //   print(error);
+      // });
+
+      http.Response response = await http.post(apiURL + '/tmpDeals/new', body: dataToSend);
     }
   }
 
