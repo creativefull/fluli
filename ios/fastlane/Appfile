@@ -4,3 +4,11 @@
 
 # For more information about the Appfile, see:
 #     https://docs.fastlane.tools/advanced/#appfile
+
+app_identifier "com.legendaryagent.app" # The bundle identifier of your app
+# apple_id "mshodiqul@gmail.com" # Your Apple email address
+
+apple_id "stores@flutter.io" # Your Apple email address
+
+itc_team_id "118089806" # iTunes Connect Team ID
+team_id "S8QB4VV633" # Developer Portal Team ID
