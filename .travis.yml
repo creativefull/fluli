@@ -11,6 +11,8 @@ before_script:
   - git clone https://github.com/flutter/flutter.git
   - ./flutter/bin/flutter doctor
   - ./flutter/bin/flutter packages get
+  - bundle update
+  - bundle update fastlane
 script:
   - ./flutter/bin/flutter build ios --release --no-codesign
   - cd ios
